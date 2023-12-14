@@ -184,12 +184,12 @@ Widget noCuenta(){
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 24 ,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w400,
                 height: 1.2125 ,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),
               children: [
-                TextSpan(text: 'Si tienes un oficio, '),
+                TextSpan(text: 'Si no tenes una cuenta, '),
                 TextSpan(
                   text: 'registrate',
                   style: TextStyle(
