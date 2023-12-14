@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'LoginScreen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -34,13 +36,13 @@ class _HomeState extends State<Home> {
           backgroundColor: Color.fromARGB(169, 226, 3, 77),
     
     ),
-     body: cuerpo()
+     body: cuerpo(context)
     );
 }
 }
 
 
-Widget cuerpo() {
+Widget cuerpo(BuildContext context) {
     String imagePath = 'assets/trade-guide/840d3c8f28db369421144e41674806d4.jpg';
   
     return Container(
@@ -58,7 +60,8 @@ Widget cuerpo() {
         children:  <Widget> [
         titulo(),
         subtitulo(),
-        btnLogin(),
+      //  campoUser(),
+        btnLogin(context),
         noCuenta()
 
       ]),
@@ -136,47 +139,56 @@ Widget subtitulo() {
   );
 }
 
-Widget btnLogin() {
-   double fem = 10.0;
-  double ffem = 10.0;
-return Transform.translate(
-   offset: Offset(0.0, 335.0),
-child: Container(
-          
-          width: 250,
-          height: 59,
-        
-          decoration: BoxDecoration(
-            color: Color(0xe0bbfaff),
-            borderRadius: BorderRadius.circular(50),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x3f000000),
-                offset: Offset(0, 4),
-                blurRadius: 2 ,
-              ),
-            ],
-          ),
-          child: Center(
-            child: Text(
-              'LOGIN',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 24,
-                fontWeight: FontWeight.w300,
-              
-                color: Color(0xff000000),
-              ),
+Widget btnLogin(BuildContext context) {
+  return Transform.translate(
+    offset: Offset(0.0, 330.0),
+    child: TextButton(
+      onPressed: () {
+  // Navegar a la pantalla de inicio de sesión
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      },
+      child: Container(
+        width: 250,
+        height: 59,
+        decoration: BoxDecoration(
+          color: Color(0xe0bbfaff),
+          borderRadius: BorderRadius.circular(50),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x3f000000),
+              offset: Offset(0, 4),
+              blurRadius: 2,
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            'Iniciar',
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 24,
+              fontWeight: FontWeight.w300,
+              color: Color(0xff000000),
             ),
           ),
         ),
-        );
-
+      ),
+    ),
+  );
 }
+
 
 Widget noCuenta(){
 
-  return Transform.translate(offset: Offset(0.0,370.0),
+  return Transform.translate(offset: Offset(0.0,340.0),
+  child: TextButton(
+      onPressed: () {
+        // Aquí va tu lógica al presionar el botón
+
+      },
   child: Container(
           margin: EdgeInsets.fromLTRB(0 , 0, 15 , 0 ),
           child: RichText(
@@ -205,5 +217,6 @@ Widget noCuenta(){
             ),
           ),
         ),
+  ),
   );
 }
