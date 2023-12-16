@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'LoginScreen.dart';
-
+import 'RegistroProfesional.dart';
 void main() {
   runApp(MyApp());
 }
@@ -62,7 +62,7 @@ Widget cuerpo(BuildContext context) {
         subtitulo(),
       //  campoUser(),
         btnLogin(context),
-        noCuenta()
+        noCuenta(context)
 
       ]),
      ),
@@ -181,13 +181,16 @@ Widget btnLogin(BuildContext context) {
 }
 
 
-Widget noCuenta(){
+Widget noCuenta(context){
 
   return Transform.translate(offset: Offset(0.0,340.0),
   child: TextButton(
       onPressed: () {
         // Aquí va tu lógica al presionar el botón
-
+ Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegistroProfesional()),
+                    );
       },
   child: Container(
           margin: EdgeInsets.fromLTRB(0 , 0, 15 , 0 ),
