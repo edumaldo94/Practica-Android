@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+//import 'package:http/http.dart' as http;
+//import 'dart:convert';
 
 class RegistroProfesional extends StatefulWidget {
   @override
@@ -8,10 +8,19 @@ class RegistroProfesional extends StatefulWidget {
 }
 
 class _RegistroProfesionalState extends State<RegistroProfesional> {
+  bool acceptedTerms = false;
   List<String> countries = []; // Lista de países obtenida de la API
   String? selectedCountry;
    List<String> provinces = [];// Lista de provincias obtenidas de la API
   String? selectedProvince;
+ List<String> profesiones = [
+    'Profesión 1',
+    'Profesión 2',
+    'Profesión 3',
+    // ... Agrega más profesiones aquí
+  ];
+  List<String> selectedProfesiones = [];// Lista de profesiones seleccionadas
+
    TextEditingController nombreController = TextEditingController();
   TextEditingController apellidoController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -94,12 +103,93 @@ Future<void> fetchProvinces(String country) async {
   }
 }
 
+ // Método para mostrar un diálogo con los términos y condiciones
+  Future<void> _mostrarTerminosCondiciones() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Términos y Condiciones'),
+          content: SingleChildScrollView(
+            child: Text(
+              '''
+1. Aceptación de los Términos y Condiciones:\n
+Estos términos y condiciones regulan el uso del servicio ofrecido por nuestra aplicación.\n
+2. Uso del Servicio:\n
+Al usar nuestra aplicación, aceptas cumplir con estos términos y condiciones.\n
+3. Modificaciones:\n
+Nos reservamos el derecho de modificar, actualizar o reemplazar cualquier parte de estos términos y condiciones.\n
+4. Limitaciones de Responsabilidad:\n
+No nos responsabilizamos por el uso indebido del servicio.\n
+5. Contacto:\n
+Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
+'''
+
+              // Coloca aquí tu texto con los términos y condiciones de la app
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cerrar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   void initState() {
     super.initState();
     fetchCountries(); // Cargar países al iniciar el widget
+ 
   }
 
+
+
+  // Resto del código
+
+  Future<void> _mostrarDialogoProfesiones() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Selecciona tus profesiones'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: profesiones.map((String profesion) {
+                return CheckboxListTile(
+                  title: Text(profesion),
+                  value: selectedProfesiones.contains(profesion),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      if (value != null && value) {
+                        selectedProfesiones.add(profesion);
+                      } else {
+                        selectedProfesiones.remove(profesion);
+                      }
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,6 +201,7 @@ Future<void> fetchProvinces(String country) async {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+           
             TextFormField(
                controller: nombreController,
               decoration: InputDecoration(labelText: 'Nombre'),
@@ -189,16 +280,45 @@ Future<void> fetchProvinces(String country) async {
               
               decoration: InputDecoration(labelText: 'Contraseña'),
             ),
-            TextFormField(
-              controller: oficioController,
-             
-              decoration: InputDecoration(labelText: 'Oficio'),
-
+        ElevatedButton(
+              onPressed: () {
+                _mostrarDialogoProfesiones();
+              },
+              child: Text('Seleccionar profesiones'),
             ),
-            SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
+Row(
+  children: [
+    Checkbox(
+      value: acceptedTerms,
+      onChanged: (bool? value) {
+        setState(() {
+          acceptedTerms = value ?? false;
+        });
+      },
+    ),
+    GestureDetector(
+      onTap: () {
+        if (!acceptedTerms) {
+          _mostrarTerminosCondiciones();
+        }
+      },
+      child: Text(
+        "Aceptación de los Términos y Condiciones",
+
+        style: TextStyle(
+          color: Colors.blue, // Color del texto para términos y condiciones
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    ),
+  ],
+),
+            SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
                 // Lógica para guardar los datos del formulario
+                if (acceptedTerms) {
                   print('Nombre: ${nombreController.text}');
     print('Apellido: ${apellidoController.text}');
     print('Email: ${emailController.text}');
@@ -209,6 +329,26 @@ Future<void> fetchProvinces(String country) async {
     print('Calle: ${calleController.text}');
     print('Contraseña: ${contrasenaController.text}');
     print('Oficio: ${oficioController.text}');
+     } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Debes aceptar los términos y condiciones para continuar.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
               },
                style: ElevatedButton.styleFrom(
                    
@@ -219,6 +359,7 @@ Future<void> fetchProvinces(String country) async {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(30), // Ajusta el radio de borde del botón
     ),
+ 
   ),
   
               child: Text('Registrar'),
