@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 //import 'package:http/http.dart' as http;
 //import 'dart:convert';
 
+
+class Profesion {
+  String nombre;
+  bool seleccionada;
+
+  Profesion(this.nombre, this.seleccionada);
+}
+
+
 class RegistroProfesional extends StatefulWidget {
   @override
   _RegistroProfesionalState createState() => _RegistroProfesionalState();
@@ -13,13 +22,9 @@ class _RegistroProfesionalState extends State<RegistroProfesional> {
   String? selectedCountry;
    List<String> provinces = [];// Lista de provincias obtenidas de la API
   String? selectedProvince;
- List<String> profesiones = [
-    'Profesión 1',
-    'Profesión 2',
-    'Profesión 3',
-    // ... Agrega más profesiones aquí
-  ];
-  List<String> selectedProfesiones = [];// Lista de profesiones seleccionadas
+  
+// Lista de profesiones seleccionadas
+
 
    TextEditingController nombreController = TextEditingController();
   TextEditingController apellidoController = TextEditingController();
@@ -32,23 +37,6 @@ class _RegistroProfesionalState extends State<RegistroProfesional> {
 
 
   Future<void> fetchCountries() async {
-    /*
-    final url = Uri.parse('https://restcountries.com/v2/all');
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        setState(() {
-          countries = data.map<String>((country) => country['name']).toList();
-        });
-      } else {
-        throw Exception('Failed to load countries');
-      }
-    } catch (error) {
-      throw Exception('Failed to load countries: $error');
-    }
-    */
 
     try {
     // Lista de provincias de Argentina
@@ -150,46 +138,18 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
   }
 
 
+List<Profesion> profesiones = [
+  Profesion('Aire Acondicionado', false),
+  Profesion('Albañil', false),
+  Profesion('Pintor', false),
+  Profesion('Plomero', false),
+  // Agrega más profesiones aquí
+];
+ List<String> selectedProfesiones = [];
 
   // Resto del código
 
-  Future<void> _mostrarDialogoProfesiones() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Selecciona tus profesiones'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: profesiones.map((String profesion) {
-                return CheckboxListTile(
-                  title: Text(profesion),
-                  value: selectedProfesiones.contains(profesion),
-                  onChanged: (bool? value) {
-                    setState(() {
-                      if (value != null && value) {
-                        selectedProfesiones.add(profesion);
-                      } else {
-                        selectedProfesiones.remove(profesion);
-                      }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Aceptar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -280,12 +240,23 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
               
               decoration: InputDecoration(labelText: 'Contraseña'),
             ),
-        ElevatedButton(
-              onPressed: () {
-                _mostrarDialogoProfesiones();
-              },
-              child: Text('Seleccionar profesiones'),
-            ),
+             const SizedBox(height: 10),
+        Wrap(
+  spacing: 8.0,
+  runSpacing: 8.0,
+  children: profesiones.map((profesion) {
+    return CheckboxListTile(
+      title: Text(profesion.nombre),
+      value: profesion.seleccionada,
+      onChanged: (bool? value) {
+        setState(() {
+          profesion.seleccionada = value ?? false;
+        });
+      },
+    );
+  }).toList(),
+),
+
                   SizedBox(height: 15.0),
 Row(
   children: [
@@ -317,6 +288,15 @@ Row(
             SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
+                 List<String> profesionesSeleccionadas = [];
+    for (var profesion in profesiones) {
+      if (profesion.seleccionada) {
+        profesionesSeleccionadas.add(profesion.nombre);
+      }
+    }
+    setState(() {
+      selectedProfesiones = profesionesSeleccionadas;
+    });
                 // Lógica para guardar los datos del formulario
                 if (acceptedTerms) {
                   print('Nombre: ${nombreController.text}');
@@ -328,7 +308,7 @@ Row(
      print('Ciudad: ${ciudadController.text}');
     print('Calle: ${calleController.text}');
     print('Contraseña: ${contrasenaController.text}');
-    print('Oficio: ${oficioController.text}');
+     print('Profesiones seleccionadas: $selectedProfesiones');
      } else {
       showDialog(
         context: context,
@@ -349,7 +329,9 @@ Row(
         },
       );
     }
+    
               },
+              
                style: ElevatedButton.styleFrom(
                    
     primary: Color.fromARGB(255, 255, 188, 44), // Cambia el color del botón aquí
