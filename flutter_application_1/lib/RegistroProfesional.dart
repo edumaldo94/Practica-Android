@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:http/http.dart' as http;
 //import 'dart:convert';
-
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class Profesion {
   String nombre;
@@ -136,22 +136,83 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
     fetchCountries(); // Cargar países al iniciar el widget
  
   }
+ List<ValueItem> opcionesProfesiones = const <ValueItem>[
+  ValueItem(label: 'Aire Acondicionado', value: '1'),
+  ValueItem(label: 'Albañil', value: '1'),
+  ValueItem(label: 'Arquitecto', value: '1'),
+  ValueItem(label: 'Automotriz', value: '1'),
+    ValueItem(label: 'Belleza', value: '1'),
+  ValueItem(label: 'Carpinteria', value: '1'),
+  ValueItem(label: 'Cerrajero', value: '1'),
+  ValueItem(label: 'Chapista', value: '1'),
+    ValueItem(label: 'Computación', value: '1'),
+  ValueItem(label: 'Desinfectación', value: '1'),
+  ValueItem(label: 'Diseño', value: '1'),
+  ValueItem(label: 'Electricidad', value: '1'),
+    ValueItem(label: 'Electronica', value: '1'),
+  ValueItem(label: 'Eventos', value: '1'),
+  ValueItem(label: 'Gasista', value: '1'),
+  ValueItem(label: 'Heladera', value: '1'),
+  ValueItem(label: 'Herrero', value: '1'),
+  ValueItem(label: 'Jardineria', value: '1'),
+  ValueItem(label: 'Lavarropa', value: '1'),
+  ValueItem(label: 'Limpieza', value: '1'),
+    ValueItem(label: 'Mecanico de Auto', value: '1'),
+  ValueItem(label: 'Mecanico de moto', value: '1'),
+  ValueItem(label: 'Mudanza', value: '1'),
+  ValueItem(label: 'Pintor', value: '1'),
+   ValueItem(label: 'Plomero', value: '1'),
+  ValueItem(label: 'Seguridad', value: '1'),
+  ValueItem(label: 'Tapicero', value: '1'),
+  ValueItem(label: 'Tatto', value: '1'),
+  ValueItem(label: 'Veterinaria', value: '1'),
+  ValueItem(label: 'Otros', value: '1'),
 
+ ];
 
 List<Profesion> profesiones = [
   Profesion('Aire Acondicionado', false),
   Profesion('Albañil', false),
+  Profesion('Arquitecto', false),
+  Profesion('Automotriz', false),
+    Profesion('Belleza', false),
+  Profesion('Carpinteria', false),
+  Profesion('Cerrajero', false),
+  Profesion('Chapista', false),
+    Profesion('Computación', false),
+  Profesion('Desinfectación', false),
+  Profesion('Diseño', false),
+  Profesion('Electricidad', false),
+    Profesion('Electronica', false),
+  Profesion('Eventos', false),
+  Profesion('Gasista', false),
+  Profesion('Heladera', false),
+  Profesion('Herrero', false),
+  Profesion('Jardineria', false),
+  Profesion('Lavarropa', false),
+  Profesion('Limpieza', false),
+    Profesion('Mecanico de Auto', false),
+  Profesion('Mecanico de moto', false),
+  Profesion('Mudanza', false),
   Profesion('Pintor', false),
-  Profesion('Plomero', false),
+   Profesion('Plomero', false),
+  Profesion('Seguridad', false),
+  Profesion('Tapicero', false),
+  Profesion('Tatto', false),
+  Profesion('Veterinaria', false),
+  Profesion('Otros', false),
+
   // Agrega más profesiones aquí
 ];
  List<String> selectedProfesiones = [];
 
   // Resto del código
 
+
     
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Registro Profesional'),
@@ -204,7 +265,7 @@ List<Profesion> profesiones = [
                   )
                   .toList(),
             ),
-            SizedBox(height: 20),
+
             DropdownButtonFormField<String>(
               value: selectedProvince,
               decoration: InputDecoration(labelText: 'Provincia'),
@@ -224,6 +285,7 @@ List<Profesion> profesiones = [
                   )
                   .toList(),
             ),
+
             TextFormField(
               controller: ciudadController,
              
@@ -241,23 +303,26 @@ List<Profesion> profesiones = [
               decoration: InputDecoration(labelText: 'Contraseña'),
             ),
              const SizedBox(height: 10),
-        Wrap(
-  spacing: 8.0,
-  runSpacing: 8.0,
-  children: profesiones.map((profesion) {
-    return CheckboxListTile(
-      title: Text(profesion.nombre),
-      value: profesion.seleccionada,
-      onChanged: (bool? value) {
-        setState(() {
-          profesion.seleccionada = value ?? false;
-        });
-      },
-    );
-  }).toList(),
+             const Text(
+  'Profesión',
+  style: TextStyle(
+    fontSize: 17, // Cambia el tamaño de fuente a 20 puntos
+    // Puedes agregar otros estilos aquí según sea necesario
+  ),
 ),
 
-                  SizedBox(height: 15.0),
+  MultiSelectDropDown(
+              dropdownHeight: 300,
+              onOptionSelected: (List<ValueItem> options) {
+                setState(() {
+                  selectedProfesiones = options.map((item) => item.label).toList();
+                });
+              },
+              options: opcionesProfesiones,
+              selectionType: SelectionType.multi,
+              chipConfig: ChipConfig(wrapType: WrapType.wrap),
+            ),
+   SizedBox(height: 15.0),
 Row(
   children: [
     Checkbox(
@@ -288,15 +353,7 @@ Row(
             SizedBox(height: 15.0),
             ElevatedButton(
               onPressed: () {
-                 List<String> profesionesSeleccionadas = [];
-    for (var profesion in profesiones) {
-      if (profesion.seleccionada) {
-        profesionesSeleccionadas.add(profesion.nombre);
-      }
-    }
-    setState(() {
-      selectedProfesiones = profesionesSeleccionadas;
-    });
+              
                 // Lógica para guardar los datos del formulario
                 if (acceptedTerms) {
                   print('Nombre: ${nombreController.text}');
