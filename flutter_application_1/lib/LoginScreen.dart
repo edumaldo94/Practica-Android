@@ -22,9 +22,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
+      
+       appBar: AppBar(
+          title: Text("Homework"),
+          backgroundColor: Color.fromARGB(255, 255, 189, 66),
+    
+    ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[

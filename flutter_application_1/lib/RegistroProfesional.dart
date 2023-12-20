@@ -155,205 +155,288 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
   ];
 
   List<String> selectedProfesiones = [];
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registro Profesional'),
+        title: Text("Homework"),
+        backgroundColor: Color.fromARGB(255, 255, 189, 66),
       ),
+      backgroundColor: Color.fromARGB(255, 255, 189, 66),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            TextFormField(
-              controller: nombreController,
-              decoration: InputDecoration(labelText: 'Nombre'),
-            ),
-            TextFormField(
-              controller: apellidoController,
-              decoration: InputDecoration(labelText: 'Apellido'),
-            ),
-            TextFormField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextFormField(
-              controller: celularController,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(labelText: 'Celular'),
-            ),
-            DropdownButtonFormField<String>(
-              value: selectedCountry,
-              decoration: InputDecoration(labelText: 'País'),
-              dropdownColor: Color.fromARGB(255, 255, 188,
-                  44), // Opcional: define el color del menú desplegable
-              isExpanded: true,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedCountry = newValue;
-                  provinces.clear();
-                  selectedProvince = null;
-                  fetchProvinces(newValue!);
-                });
-              },
-              items: countries
-                  .map<DropdownMenuItem<String>>(
-                    (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
-                  .toList(),
-            ),
-            DropdownButtonFormField<String>(
-              value: selectedProvince,
-              decoration: InputDecoration(labelText: 'Provincia'),
-              dropdownColor: Color.fromARGB(255, 255, 188,44), // Opcional: define el color del menú desplegable
-              isExpanded: true,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedProvince = newValue;
-                });
-              },
-              items: provinces
-                  .map<DropdownMenuItem<String>>(
-                    (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
-                  .toList(),
-            ),
-            TextFormField(
-              controller: ciudadController,
-              decoration: InputDecoration(labelText: 'Ciudad'),
-            ),
-            TextFormField(
-              controller: calleController,
-              decoration: InputDecoration(labelText: 'Calle'),
-            ),
-            TextFormField(
-              obscureText: true,
-              controller: contrasenaController,
-              decoration: InputDecoration(labelText: 'Contraseña'),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Profesión',
-              style: TextStyle(
-                fontSize: 17, // Cambia el tamaño de fuente a 20 puntos
-
-                // Puedes agregar otros estilos aquí según sea necesario
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TextFormField(
+                controller: nombreController,
+                decoration: InputDecoration(labelText: 'Nombre'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su nombre';
+                  }
+                  return null;
+                },
               ),
-            ),
-            
-            MultiSelectDropDown(
-             
-               optionTextStyle: TextStyle(
-              
-    color: Color.fromARGB(255, 112, 31, 167), // Cambia el color del texto de las opciones a azul
-    fontSize: 18, // Ajusta el tamaño de fuente si es necesario
-  ),
-  
-              dropdownHeight: 300,
-              onOptionSelected: (List<ValueItem> options) {
-                setState(() {
-                  selectedProfesiones =
-                      options.map((item) => item.label).toList();
-                });
-              },
-              options: opcionesProfesiones,
-              selectionType: SelectionType.multi,
-              chipConfig: ChipConfig(wrapType: WrapType.wrap),
-              
-            ),
+              TextFormField(
+                controller: apellidoController,
+                decoration: InputDecoration(labelText: 'Apellido'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Apellido';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(labelText: 'Email'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Email';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: celularController,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(labelText: 'Celular'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Celular';
+                  }
+                  return null;
+                },
+              ),
+              DropdownButtonFormField<String>(
+                value: selectedCountry,
+                decoration: InputDecoration(labelText: 'País'),
+                dropdownColor: Color.fromARGB(255, 255, 188,
+                    44), // Opcional: define el color del menú desplegable
+                isExpanded: true,
+                
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedCountry = newValue;
+                    provinces.clear();
+                    selectedProvince = null;
+                    fetchProvinces(newValue!);
+                  });
+                  
+                },
+                items: countries
+                    .map<DropdownMenuItem<String>>(
+                      (String value) => DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      ),
+                    )
+                    .toList(),
+                    validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Pais';
+                  }
+                  return null;
+                },
+              ),
+              DropdownButtonFormField<String>(
+                value: selectedProvince,
+                decoration: InputDecoration(labelText: 'Provincia'),
+                dropdownColor: Color.fromARGB(255, 255, 188,
+                    44), // Opcional: define el color del menú desplegable
+                isExpanded: true,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedProvince = newValue;
+                  });
+                },
+                items: provinces
+                    .map<DropdownMenuItem<String>>(
+                      (String value) => DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      ),
+                    )
+                    .toList(),
+                    validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Provincia';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: ciudadController,
+                decoration: InputDecoration(labelText: 'Ciudad'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Ciudad';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: calleController,
+                decoration: InputDecoration(labelText: 'Calle'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Calle';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                obscureText: true,
+                controller: contrasenaController,
+                decoration: InputDecoration(labelText: 'Contraseña'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, ingrese su Contraseña';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Profesión',
+                style: TextStyle(
+                  fontSize: 17, // Cambia el tamaño de fuente a 20 puntos
 
-
-            SizedBox(height: 15.0),
-            Row(
-              children: [
-                Checkbox(
-                  value: acceptedTerms,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      acceptedTerms = value ?? false;
-                    });
-                  },
+                  // Puedes agregar otros estilos aquí según sea necesario
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if (!acceptedTerms) {
-                      _mostrarTerminosCondiciones();
-                    }
-                  },
-                  child: Text(
-                    "Aceptación de los Términos y Condiciones",
-                    style: TextStyle(
-                      color: Colors
-                          .blue, // Color del texto para términos y condiciones
-                      decoration: TextDecoration.underline,
+              ),
+              MultiSelectDropDown(
+                
+                optionTextStyle: TextStyle(
+                  color: Color.fromARGB(255, 112, 31,
+                      167), // Cambia el color del texto de las opciones a azul
+                  fontSize: 18, // Ajusta el tamaño de fuente si es necesario
+                ),
+                dropdownHeight: 300,
+                onOptionSelected: (List<ValueItem> options) {
+                  setState(() {
+                    selectedProfesiones =
+                        options.map((item) => item.label).toList();
+                        
+                  });
+                  
+                },
+                options: opcionesProfesiones,
+                selectionType: SelectionType.multi,
+                chipConfig: ChipConfig(wrapType: WrapType.wrap),
+                
+              ),
+              SizedBox(height: 15.0),
+              Row(
+                children: [
+                  Checkbox(
+                    value: acceptedTerms,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        acceptedTerms = value ?? false;
+                      });
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (!acceptedTerms) {
+                        _mostrarTerminosCondiciones();
+                      }
+                    },
+                    child: Text(
+                      "Aceptación de los Términos y Condiciones",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors
+                            .blue, // Color del texto para términos y condiciones
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            ElevatedButton(
-              onPressed: () {
-                // Lógica para guardar los datos del formulario
-                if (acceptedTerms) {
-                  print('Nombre: ${nombreController.text}');
-                  print('Apellido: ${apellidoController.text}');
-                  print('Email: ${emailController.text}');
-                  print('Celular: ${celularController.text}');
-                  print('Pais seleccionada: $selectedCountry');
-                  print('Provincia seleccionada: $selectedProvince');
-                  print('Ciudad: ${ciudadController.text}');
-                  print('Calle: ${calleController.text}');
-                  print('Contraseña: ${contrasenaController.text}');
-                  print('Profesiones seleccionadas: $selectedProfesiones');
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Error'),
-                        content: Text(
-                            'Debes aceptar los términos y condiciones para continuar.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(
-                    255, 255, 188, 44), // Cambia el color del botón aquí
-                onPrimary: Color.fromARGB(
-                    255, 253, 253, 253), // Color del texto del botón
-                padding: EdgeInsets.symmetric(
-                    vertical: 0, horizontal: 0), // Ajusta el tamaño del botón
-                textStyle: TextStyle(
-                    fontSize: 25), // Ajusta el tamaño del texto del botón
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      30), // Ajusta el radio de borde del botón
-                ),
+                ],
               ),
-              child: Text('Registrar'),
-            ),
-            SizedBox(height: 20.0),
-          ],
+              SizedBox(height: 15.0),
+              ElevatedButton(
+                onPressed: () {
+                  // Lógica para guardar los datos del formulario
+
+                  if (_formKey.currentState!.validate()) {
+                    if (acceptedTerms) {
+                      print('Nombre: ${nombreController.text}');
+                      print('Apellido: ${apellidoController.text}');
+                      print('Email: ${emailController.text}');
+                      print('Celular: ${celularController.text}');
+                      print('Pais seleccionada: $selectedCountry');
+                      print('Provincia seleccionada: $selectedProvince');
+                      print('Ciudad: ${ciudadController.text}');
+                      print('Calle: ${calleController.text}');
+                      print('Contraseña: ${contrasenaController.text}');
+                      print('Profesiones seleccionadas: $selectedProfesiones');
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text(
+                                'Debes aceptar los términos y condiciones para continuar.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content:
+                              Text('Por favor, complete todos los campos.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(
+                      255, 255, 188, 44), // Cambia el color del botón aquí
+                  onPrimary: Color.fromARGB(
+                      255, 253, 253, 253), // Color del texto del botón
+                  padding: EdgeInsets.symmetric(
+                      vertical: 0, horizontal: 0), // Ajusta el tamaño del botón
+                  textStyle: TextStyle(
+                      fontSize: 25), // Ajusta el tamaño del texto del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        30), // Ajusta el radio de borde del botón
+                  ),
+                ),
+                child: Text('Registrar'),
+              ),
+              SizedBox(height: 20.0),
+            ],
+          ),
         ),
       ),
     );

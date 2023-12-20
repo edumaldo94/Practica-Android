@@ -34,7 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade300,
+       appBar: AppBar(
+          title: Text("Homework"),
+          backgroundColor: Color.fromARGB(255, 255, 189, 66),
+    
+    ),
+        
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8),

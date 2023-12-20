@@ -32,8 +32,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
          appBar: AppBar(
-          title: Text("My app"),
-          backgroundColor: Color.fromARGB(169, 226, 3, 77),
+          title: Text("Homework"),
+          backgroundColor: Color.fromARGB(255, 255, 189, 66),
     
     ),
      body: cuerpo(context)
