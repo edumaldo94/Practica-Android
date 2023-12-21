@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
        appBar: AppBar(
           title: Text("Homework"),
           backgroundColor: Color.fromARGB(255, 255, 189, 66),
-    
+    centerTitle: true,
     ),
         
         body: SafeArea(

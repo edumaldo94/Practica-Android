@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
          appBar: AppBar(
           title: Text("Homework"),
           backgroundColor: Color.fromARGB(255, 255, 189, 66),
-    
+    centerTitle: true,
     ),
      body: cuerpo(context)
     );
@@ -198,7 +198,7 @@ Widget noCuenta(context){
             text: TextSpan(
               style: TextStyle(
                 fontFamily: 'Inter',
-                fontSize: 24 ,
+                fontSize: 18 ,
                 fontWeight: FontWeight.w400,
                 height: 1.2125 ,
                 color: Color.fromARGB(255, 0, 0, 0),
@@ -208,7 +208,7 @@ Widget noCuenta(context){
                 TextSpan(
                   text: 'registrate',
                   style: TextStyle(
-                    fontSize: 24 ,
+                    fontSize: 19 ,
                     fontWeight: FontWeight.w300,
                     height: 1.2125  ,
                     decoration: TextDecoration.underline,

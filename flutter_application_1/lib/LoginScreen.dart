@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
        appBar: AppBar(
           title: Text("Homework"),
           backgroundColor: Color.fromARGB(255, 255, 189, 66),
-    
+    centerTitle: true,
     ),
       body: Stack(
         fit: StackFit.expand,
@@ -114,10 +114,11 @@ class LoginScreen extends StatelessWidget {
                   },
                   
                   child: RichText(
+                    
                     text: TextSpan(
                       text: '¿No estás registrado? ',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 18,
                        
                       ),
@@ -176,9 +177,9 @@ class LoginScreen extends StatelessWidget {
                     text: TextSpan(
                       text: '¿Olvidaste tu ',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 18,
-                        decoration: TextDecoration.underline,
+                      
                       ),
                       
                       children: [
@@ -187,14 +188,15 @@ class LoginScreen extends StatelessWidget {
                           style: TextStyle(
                             color: const Color.fromARGB(255, 243, 33, 33), // Cambia el color de "contraseña"
                             fontSize: 18,
+                              decoration: TextDecoration.underline,
                           ),
                         ),
                         TextSpan(
                           text: '?',
                           style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: Color.fromARGB(255, 250, 250, 250),
                             fontSize: 18,
-                            decoration: TextDecoration.underline,
+                           
                           ),
                         ),
                       ],

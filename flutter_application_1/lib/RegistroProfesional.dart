@@ -160,10 +160,11 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Homework"),
+        title: Text("Registro Profesional"),
         backgroundColor: Color.fromARGB(255, 255, 189, 66),
+        centerTitle: true,
       ),
-      backgroundColor: Color.fromARGB(255, 255, 189, 66),
+        backgroundColor: Color.fromARGB(255, 255, 189, 66),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -216,8 +217,7 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
               DropdownButtonFormField<String>(
                 value: selectedCountry,
                 decoration: InputDecoration(labelText: 'País'),
-                dropdownColor: Color.fromARGB(255, 255, 188,
-                    44), // Opcional: define el color del menú desplegable
+                dropdownColor: Color.fromARGB(255, 226, 226, 226), // Opcional: define el color del menú desplegable
                 isExpanded: true,
                 
                 onChanged: (String? newValue) {
@@ -247,8 +247,7 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
               DropdownButtonFormField<String>(
                 value: selectedProvince,
                 decoration: InputDecoration(labelText: 'Provincia'),
-                dropdownColor: Color.fromARGB(255, 255, 188,
-                    44), // Opcional: define el color del menú desplegable
+                dropdownColor: Color.fromARGB(255, 226, 226, 226), // Opcional: define el color del menú desplegable
                 isExpanded: true,
                 onChanged: (String? newValue) {
                   setState(() {
@@ -311,7 +310,7 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
                 ),
               ),
               MultiSelectDropDown(
-                
+                 backgroundColor: Color.fromARGB(255, 255, 189, 66),
                 optionTextStyle: TextStyle(
                   color: Color.fromARGB(255, 112, 31,
                       167), // Cambia el color del texto de las opciones a azul
@@ -351,7 +350,7 @@ Si tienes alguna pregunta sobre estos términos y condiciones, contáctanos.
                     child: Text(
                       "Aceptación de los Términos y Condiciones",
                       style: TextStyle(
-                        fontSize: 16,
+                      
                         color: Colors
                             .blue, // Color del texto para términos y condiciones
                         decoration: TextDecoration.underline,
