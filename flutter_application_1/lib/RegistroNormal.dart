@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,83 +7,65 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const MyHomePage(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-
-  
-}
-
-
-
-class _MyHomePageState extends State<MyHomePage> {
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-          title: Text("Homework"),
-          backgroundColor: Color.fromARGB(255, 255, 189, 66),
-    centerTitle: true,
-    ),
-        
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            
-                const Text('FROM NETWORK'),
- 
-                MultiSelectDropDown.network(
-                  dropdownHeight: 300,
-                  onOptionSelected: (options) {
-                    debugPrint(options.toString());
-                  },
-                  searchEnabled: true,
-                  networkConfig: NetworkConfig(
-                    url: 'https://jsonplaceholder.typicode.com/users',
-                    method: RequestMethod.get,
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                  ),
-                  chipConfig: const ChipConfig(wrapType: WrapType.wrap),
-                  responseParser: (response) {
-                    final list = (response as List<dynamic>).map((e) {
-                      final item = e as Map<String, dynamic>;
-                      return ValueItem(
-                        label: item['name'],
-                        value: item['id'].toString(),
-                      );
-                    }).toList();
 
-                    return Future.value(list);
-                  },
-                  responseErrorBuilder: ((context, body) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Error fetching the data'),
-                    );
-                  }),
+      appBar: AppBar(
+        title: Text("uiyuiyu",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ),),
+        backgroundColor: Color.fromRGBO(0, 0, 0, 0.87),
+      ),
+      body: Center(
+       child: Form(child: 
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          
+             TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Name',
                 ),
-                const SizedBox(height: 50)
-              ],
-            ),
-          ),
-        ));
+              ),
+           
+                TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                ),
+              ),
+              
+                TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+              ),
+             
+                
+             
+          ]
+      ),
+       ),
+      ),
+    );
   }
 }
+
