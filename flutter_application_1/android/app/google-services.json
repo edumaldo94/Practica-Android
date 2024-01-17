@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "850065446996",
+    "project_id": "dataofice-f0305",
+    "storage_bucket": "dataofice-f0305.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850065446996:android:d3aac1e0f23107f3de75c1",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbYYLLWfAi-ee_FMSmfOoeKbjKtxsqr-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

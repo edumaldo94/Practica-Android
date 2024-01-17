@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,62 +11,85 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Firestore Form',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyFormPage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyFormPage extends StatefulWidget {
+  const MyFormPage({Key? key}) : super(key: key);
+
+  @override
+  _MyFormPageState createState() => _MyFormPageState();
+}
+
+class _MyFormPageState extends State<MyFormPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+
+  Future<void> _saveData() async {
+    String name = _nameController.text;
+    int age = int.tryParse(_ageController.text) ?? 0;
+
+    if (name.isNotEmpty && age > 0) {
+      try {
+        await FirebaseFirestore.instance.collection('users').add({
+          'name': name,
+          'age': age,
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Datos guardados en Firestore')),
+        );
+        // Limpiar los campos después de guardar los datos
+        _nameController.clear();
+        _ageController.clear();
+      } catch (e) {
+        print('Error al guardar datos: $e');
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, completa todos los campos')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-        title: Text("uiyuiyu",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),),
-        backgroundColor: Color.fromRGBO(0, 0, 0, 0.87),
+        title: const Text('Guardar Datos en Firestore'),
       ),
-      body: Center(
-       child: Form(child: 
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-          
-             TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                ),
+            TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Nombre',
               ),
-           
-                TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _ageController,
+              decoration: const InputDecoration(
+                labelText: 'Edad',
               ),
-              
-                TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-              ),
-             
-                
-             
-          ]
-      ),
-       ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _saveData,
+              child: const Text('Guardar'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
